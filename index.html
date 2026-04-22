@@ -1,52 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Venlong</title>
-  <meta name="description" content="Venlong — Legendary digital experiences." />
+  <title>Venlong — Legendary Digital Experiences</title>
+  <meta name="description" content="Venlong — A premium digital studio crafting legendary web experiences with Chinese-inspired elegance." />
   <link rel="icon" type="image/png" href="/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
 
-  <!-- NAVBAR -->
+  <!-- CURSOR FOLLOWER -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- PARTICLE CANVAS -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- CHINESE DECORATIVE ELEMENTS -->
+  <div class="deco-left" aria-hidden="true">
+    <div class="deco-line"></div>
+    <div class="deco-diamond"></div>
+    <div class="deco-line"></div>
+  </div>
+  <div class="deco-right" aria-hidden="true">
+    <div class="deco-line"></div>
+    <div class="deco-diamond"></div>
+    <div class="deco-line"></div>
+  </div>
+
+  <!-- ==================== NAVBAR ==================== -->
   <nav id="navbar">
     <div class="nav-brand">
-      <img src="/logo.png" alt="V" class="nav-logo" />
-      <span>VENLONG</span>
+      <img src="/logo.png" alt="Venlong Logo" class="nav-logo" />
+      <span class="nav-brand-text">VENLONG</span>
+      <span class="nav-brand-chinese">文龙</span>
     </div>
-    <div class="nav-links">
-      <button data-target="about">About</button>
-      <button data-target="services">Services</button>
-      <button data-target="projects">Projects</button>
-      <button data-target="contact">Contact</button>
+
+    <div class="nav-links" id="nav-links">
+      <button data-target="about" id="nav-about">关于 About</button>
+      <button data-target="services" id="nav-services">服务 Services</button>
+      <button data-target="projects" id="nav-projects">作品 Projects</button>
+      <button data-target="contact" id="nav-contact">联系 Contact</button>
+    </div>
+
+    <div class="nav-actions">
+      <!-- Theme Toggle -->
+      <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
+        <span class="theme-icon theme-icon--sun">☀️</span>
+        <span class="theme-icon theme-icon--moon">🌙</span>
+      </button>
+      <!-- Mobile Hamburger -->
+      <button id="hamburger" class="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
-  <!-- ==================== HERO ====================
-       height: 300vh so the sticky panel scrubs across
-       the full 250vh of scroll travel.
-  ==================================================-->
+  <!-- MOBILE MENU OVERLAY -->
+  <div id="mobile-menu" class="mobile-menu">
+    <button class="mobile-close" id="mobile-close" aria-label="Close menu">✕</button>
+    <div class="mobile-menu-inner">
+      <button data-target="about" class="mobile-link">关于 / About</button>
+      <button data-target="services" class="mobile-link">服务 / Services</button>
+      <button data-target="projects" class="mobile-link">作品 / Projects</button>
+      <button data-target="contact" class="mobile-link">联系 / Contact</button>
+    </div>
+    <div class="mobile-menu-footer">文龙 VENLONG</div>
+  </div>
+
+  <!-- ==================== HERO ==================== -->
   <section id="hero">
-    <!-- sticky viewport panel -->
     <div class="hero-stage">
 
       <!-- layer 1 — full bleed photo -->
       <div id="hero-img-layer">
         <img src="/hero.png" alt="" id="hero-img" />
-        <!-- dark overlay for legibility -->
         <div class="hero-overlay"></div>
       </div>
 
-      <!-- layer 2 — VENLONG text (hidden initially) -->
+      <!-- Floating lanterns -->
+      <div class="lantern lantern-1" aria-hidden="true">
+        <div class="lantern-body">🏮</div>
+      </div>
+      <div class="lantern lantern-2" aria-hidden="true">
+        <div class="lantern-body">🏮</div>
+      </div>
+      <div class="lantern lantern-3" aria-hidden="true">
+        <div class="lantern-body">🏮</div>
+      </div>
+
+      <!-- layer 2 — VENLONG text -->
       <div id="hero-text-layer">
-        <div class="hero-eyebrow">EST. 2024</div>
+        <div class="hero-eyebrow">
+          <span class="hero-eyebrow-zh">文龙传奇</span>
+          <span class="hero-eyebrow-sep">·</span>
+          <span>EST. 2024</span>
+        </div>
         <h1 id="hero-title">VENLONG</h1>
         <p id="hero-tagline">The Future of Digital Experiences</p>
+        <p id="hero-tagline-zh">传奇数字体验的未来</p>
+        <div class="hero-scroll-hint" id="hero-scroll-hint">
+          <span>SCROLL</span>
+          <div class="scroll-line"></div>
+        </div>
       </div>
 
     </div>
@@ -55,42 +115,84 @@
   <!-- ==================== ABOUT ==================== -->
   <section id="about" class="section">
     <div class="container">
-      <p class="overline" data-reveal="fade-up">WHO WE ARE</p>
-      <h2 class="section-heading" data-reveal="fade-up">
-        We craft<br><em>legendary</em><br>web experiences.
-      </h2>
-      <p class="section-body" data-reveal="fade-up">
-        Venlong is a digital studio at the intersection of technology and premium design.
-        We don't just build websites — we build moments people remember.
-      </p>
+      <div class="about-grid">
+        <div class="about-left">
+          <p class="overline" data-reveal="fade-up">
+            <span class="overline-zh">关于我们</span> WHO WE ARE
+          </p>
+          <h2 class="section-heading" data-reveal="fade-up">
+            We craft<br><em>legendary</em><br>web experiences.
+          </h2>
+          <p class="section-body" data-reveal="fade-up">
+            Venlong is a digital studio at the intersection of technology and premium design.
+            We don't just build websites — we build moments people remember.
+          </p>
+          <p class="section-body-zh" data-reveal="fade-up">
+            文龙是一家融合技术与高端设计的数字工作室。我们不只是建设网站——我们创造令人铭记的数字体验。
+          </p>
+        </div>
+        <div class="about-right" data-reveal="fade-up">
+          <div class="about-stat-grid">
+            <div class="about-stat">
+              <span class="stat-num" data-count="50">0</span><span class="stat-suffix">+</span>
+              <p>Projects Delivered</p>
+            </div>
+            <div class="about-stat">
+              <span class="stat-num" data-count="30">0</span><span class="stat-suffix">+</span>
+              <p>Happy Clients</p>
+            </div>
+            <div class="about-stat">
+              <span class="stat-num" data-count="2">0</span><span class="stat-suffix">yrs</span>
+              <p>Experience</p>
+            </div>
+            <div class="about-stat">
+              <span class="stat-num" data-count="99">0</span><span class="stat-suffix">%</span>
+              <p>Satisfaction</p>
+            </div>
+          </div>
+          <div class="about-chinese-art" aria-hidden="true">
+            <div class="yin-yang-ring"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- ==================== SERVICES ==================== -->
   <section id="services" class="section section--alt">
     <div class="container">
-      <p class="overline" data-reveal="fade-up">WHAT WE DO</p>
+      <p class="overline" data-reveal="fade-up">
+        <span class="overline-zh">我们的服务</span> WHAT WE DO
+      </p>
       <h2 class="section-heading" data-reveal="fade-up">Services</h2>
       <div class="cards">
         <div class="card" data-reveal="fade-up" data-delay="0">
+          <div class="card-chinese-accent">壹</div>
           <span class="card-num">01</span>
           <h3>Web Development</h3>
           <p>High-performance, modern web applications built with precision and craft.</p>
+          <div class="card-footer">网站开发</div>
         </div>
         <div class="card" data-reveal="fade-up" data-delay="1">
+          <div class="card-chinese-accent">贰</div>
           <span class="card-num">02</span>
           <h3>UI / UX Design</h3>
           <p>Interfaces that are beautiful by default and intuitive by design.</p>
+          <div class="card-footer">界面设计</div>
         </div>
         <div class="card" data-reveal="fade-up" data-delay="2">
+          <div class="card-chinese-accent">叁</div>
           <span class="card-num">03</span>
           <h3>Brand Identity</h3>
           <p>Visual languages that make your brand impossible to forget.</p>
+          <div class="card-footer">品牌形象</div>
         </div>
         <div class="card" data-reveal="fade-up" data-delay="3">
+          <div class="card-chinese-accent">肆</div>
           <span class="card-num">04</span>
-          <h3>Motion & 3D</h3>
+          <h3>Motion &amp; 3D</h3>
           <p>Scroll animations and interactive 3D that tell your story.</p>
+          <div class="card-footer">动效三维</div>
         </div>
       </div>
     </div>
@@ -99,17 +201,21 @@
   <!-- ==================== PROJECTS ==================== -->
   <section id="projects" class="section">
     <div class="container">
-      <p class="overline" data-reveal="fade-up">OUR WORK</p>
+      <p class="overline" data-reveal="fade-up">
+        <span class="overline-zh">精选作品</span> OUR WORK
+      </p>
       <h2 class="section-heading" data-reveal="fade-up">Projects</h2>
     </div>
 
-    <!-- Swiper slider -->
     <div class="swiper projects-swiper" data-reveal="fade-up">
       <div class="swiper-wrapper">
 
         <div class="swiper-slide project-slide">
           <div class="ps-inner">
-            <span class="ps-num">01</span>
+            <div class="ps-header">
+              <span class="ps-num">01</span>
+              <span class="ps-zh">红色门户</span>
+            </div>
             <h3 class="ps-title">Crimson Portal</h3>
             <p class="ps-desc">Lunar New Year event platform with real-time interactions and immersive animations.</p>
             <div class="ps-tags"><span>IMLEK</span><span>LIVE EVENT</span></div>
@@ -119,7 +225,10 @@
 
         <div class="swiper-slide project-slide">
           <div class="ps-inner">
-            <span class="ps-num">02</span>
+            <div class="ps-header">
+              <span class="ps-num">02</span>
+              <span class="ps-zh">灵光界面</span>
+            </div>
             <h3 class="ps-title">Aura UI Kit</h3>
             <p class="ps-desc">Premium component library crafted for modern, design-forward web applications.</p>
             <div class="ps-tags"><span>UI</span><span>DESIGN SYSTEM</span></div>
@@ -129,7 +238,10 @@
 
         <div class="swiper-slide project-slide">
           <div class="ps-inner">
-            <span class="ps-num">03</span>
+            <div class="ps-header">
+              <span class="ps-num">03</span>
+              <span class="ps-zh">黄金仪表</span>
+            </div>
             <h3 class="ps-title">GoldRush Dashboard</h3>
             <p class="ps-desc">Finance dashboard with animated data visualisations and live market feeds.</p>
             <div class="ps-tags"><span>FINTECH</span><span>DATA VIZ</span></div>
@@ -139,7 +251,10 @@
 
         <div class="swiper-slide project-slide">
           <div class="ps-inner">
-            <span class="ps-num">04</span>
+            <div class="ps-header">
+              <span class="ps-num">04</span>
+              <span class="ps-zh">霓虹都市</span>
+            </div>
             <h3 class="ps-title">NeonCity 3D</h3>
             <p class="ps-desc">WebGL-powered city explorer with procedural neon environments and scroll storytelling.</p>
             <div class="ps-tags"><span>THREE.JS</span><span>WEBGL</span></div>
@@ -148,7 +263,6 @@
         </div>
 
       </div>
-      <!-- nav -->
       <div class="swiper-pagination projects-pagination"></div>
       <div class="swiper-button-prev projects-prev"></div>
       <div class="swiper-button-next projects-next"></div>
@@ -158,10 +272,13 @@
   <!-- ==================== CONTACT ==================== -->
   <section id="contact" class="section section--alt">
     <div class="container">
-      <p class="overline" data-reveal="fade-up">GET IN TOUCH</p>
+      <p class="overline" data-reveal="fade-up">
+        <span class="overline-zh">联系我们</span> GET IN TOUCH
+      </p>
       <h2 class="section-heading contact-heading" data-reveal="fade-up">
         Let's build<br>something<br><em>legendary.</em>
       </h2>
+      <p class="section-body-zh contact-zh" data-reveal="fade-up">共同缔造传奇</p>
 
       <div class="contact-links" data-reveal="fade-up">
         <a href="https://instagram.com/venlong" target="_blank" class="contact-btn" id="btn-ig">
@@ -185,7 +302,11 @@
   </section>
 
   <footer class="footer">
-    <span>© 2024 Venlong. All rights reserved.</span>
+    <div class="footer-inner">
+      <span class="footer-zh">文龙工作室</span>
+      <span>© 2024 Venlong. All rights reserved.</span>
+      <span class="footer-tagline">传奇数字体验</span>
+    </div>
   </footer>
 
   <script type="module" src="./main.js"></script>
