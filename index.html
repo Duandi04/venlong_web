@@ -42,6 +42,7 @@
 
     <div class="nav-links" id="nav-links">
       <button data-target="about" id="nav-about">关于 About</button>
+      <button data-target="stats" id="nav-stats">里程碑 Stats</button>
       <button data-target="services" id="nav-services">服务 Services</button>
       <button data-target="projects" id="nav-projects">作品 Projects</button>
       <button data-target="contact" id="nav-contact">联系 Contact</button>
@@ -64,10 +65,11 @@
   <div id="mobile-menu" class="mobile-menu">
     <button class="mobile-close" id="mobile-close" aria-label="Close menu">✕</button>
     <div class="mobile-menu-inner">
-      <button data-target="about" class="mobile-link">关于 / About</button>
-      <button data-target="services" class="mobile-link">服务 / Services</button>
-      <button data-target="projects" class="mobile-link">作品 / Projects</button>
-      <button data-target="contact" class="mobile-link">联系 / Contact</button>
+      <div class="mobile-link-wrap"><button data-target="about" class="mobile-link">关于/About</button></div>
+      <div class="mobile-link-wrap"><button data-target="stats" class="mobile-link">里程碑/Stats</button></div>
+      <div class="mobile-link-wrap"><button data-target="services" class="mobile-link">服务/Services</button></div>
+      <div class="mobile-link-wrap"><button data-target="projects" class="mobile-link">作品/Projects</button></div>
+      <div class="mobile-link-wrap"><button data-target="contact" class="mobile-link">联系/Contact</button></div>
     </div>
     <div class="mobile-menu-footer">文龙 VENLONG</div>
   </div>
@@ -132,27 +134,149 @@
           </p>
         </div>
         <div class="about-right" data-reveal="fade-up">
-          <div class="about-stat-grid">
-            <div class="about-stat">
-              <span class="stat-num" data-count="50">0</span><span class="stat-suffix">+</span>
-              <p>Projects Delivered</p>
+          <!-- INTERACTIVE ANGPAO (Ultra-Realistic SVG) -->
+          <div class="about-angpao env-wrapper" aria-label="Interactive Angpao">
+            <!-- 1. Envelop Back & Inner Darkness -->
+            <svg class="env-back" viewBox="0 0 200 300" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="back-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#5a000a" />
+                  <stop offset="100%" stop-color="#2a0004" />
+                </linearGradient>
+              </defs>
+              <rect x="0" y="0" width="200" height="300" rx="8" ry="8" fill="url(#back-grad)" />
+            </svg>
+            
+            <!-- 2. The Letter/Paper Inside -->
+            <div class="env-paper">
+              <div class="env-paper-inner">
+                <div class="profile-name">Founder</div>
+                <div class="profile-role">首席执行官</div>
+                <div class="angpao-details">A legend in digital craftsmanship, merging code with ancient philosophy to build stunning digital realms.</div>
+              </div>
             </div>
-            <div class="about-stat">
-              <span class="stat-num" data-count="30">0</span><span class="stat-suffix">+</span>
-              <p>Happy Clients</p>
-            </div>
-            <div class="about-stat">
-              <span class="stat-num" data-count="2">0</span><span class="stat-suffix">yrs</span>
-              <p>Experience</p>
-            </div>
-            <div class="about-stat">
-              <span class="stat-num" data-count="99">0</span><span class="stat-suffix">%</span>
-              <p>Satisfaction</p>
+            
+            <!-- 3. Envelope Front (Left, Right, Bottom locked in) -->
+            <svg class="env-front" viewBox="0 0 200 300" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="flap-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#d9001b" />
+                  <stop offset="100%" stop-color="#990012" />
+                </linearGradient>
+                <linearGradient id="flap-grad-dark" x1="0%" y1="100%" x2="0%" y2="0%">
+                  <stop offset="0%" stop-color="#e60012" />
+                  <stop offset="100%" stop-color="#b30015" />
+                </linearGradient>
+                <!-- Shadows -->
+                <filter id="shadow-left" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="-2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/>
+                </filter>
+                <filter id="shadow-right" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/>
+                </filter>
+                <filter id="shadow-bottom" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="-4" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
+                </filter>
+                <!-- Gold Foil Pattern -->
+                <pattern id="gold-dots" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+                  <circle cx="2" cy="2" r="1" fill="rgba(212,175,55,0.15)"/>
+                </pattern>
+                
+                <clipPath id="front-clip">
+                  <rect x="0" y="0" width="200" height="300" rx="8" ry="8" />
+                </clipPath>
+              </defs>
+              
+              <g clip-path="url(#front-clip)">
+                <!-- Base textured red -->
+                <rect x="0" y="0" width="200" height="300" fill="url(#gold-dots)" />
+                <!-- Left Flap -->
+                <path d="M0 0 L90 140 L0 300 Z" fill="url(#flap-grad)" filter="url(#shadow-left)"/>
+                <!-- Right Flap -->
+                <path d="M200 0 L110 140 L200 300 Z" fill="url(#flap-grad)" filter="url(#shadow-right)"/>
+                <!-- Bottom Flap -->
+                <path d="M-10 310 L100 160 L210 310 Z" fill="url(#flap-grad-dark)" filter="url(#shadow-bottom)"/>
+              </g>
+            </svg>
+
+            <!-- 4. Envelope Top Hinge (Rotates Up) -->
+            <div class="env-top-wrap">
+              <svg class="env-top-flap" viewBox="0 0 200 160" preserveAspectRatio="none">
+                <defs>
+                  <filter id="shadow-top" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000" flood-opacity="0.7"/>
+                  </filter>
+                  <linearGradient id="flap-grad-top" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#cc0018" />
+                    <stop offset="100%" stop-color="#ff1a33" />
+                  </linearGradient>
+                  
+                  <clipPath id="top-clip">
+                    <rect x="0" y="0" width="200" height="160" rx="8" ry="8" />
+                  </clipPath>
+                </defs>
+                <g clip-path="url(#top-clip)">
+                  <!-- Pointy Flap -->
+                  <path d="M-10 -10 L100 130 L210 -10 Z" fill="url(#flap-grad-top)" filter="url(#shadow-top)"/>
+                  
+                  <!-- Golden Seal Base -->
+                  <circle cx="100" cy="120" r="24" fill="url(#top-gold)" filter="url(#shadow-top)" />
+                  <!-- Gold Seal Ring -->
+                  <circle cx="100" cy="120" r="20" fill="none" stroke="#ffeb99" stroke-width="1.5" stroke-dasharray="3 3"/>
+                  
+                  <radialGradient id="top-gold" cx="30%" cy="30%">
+                    <stop offset="0%" stop-color="#ffe680"/>
+                    <stop offset="100%" stop-color="#ccaa00"/>
+                  </radialGradient>
+                  
+                  <text x="100" y="129" fill="#5a000a" font-family="Noto Serif SC" font-size="22" font-weight="900" text-anchor="middle">福</text>
+                </g>
+              </svg>
             </div>
           </div>
+
           <div class="about-chinese-art" aria-hidden="true">
-            <div class="yin-yang-ring"></div>
+            <svg class="yin-yang-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="48" fill="transparent" stroke="var(--gold)" stroke-width="2"/>
+              <!-- Right side (Light in dark theme) -->
+              <path class="yy-light" d="M50 2 a48 48 0 0 1 0 96 a24 24 0 0 0 0 -48 a24 24 0 0 1 0 -48" />
+              <!-- Left side (Dark in dark theme) -->
+              <path class="yy-dark" d="M50 2 a48 48 0 0 0 0 96 a24 24 0 0 0 0 -48 a24 24 0 0 1 0 -48" />
+              <!-- Dots -->
+              <circle class="yy-dark-dot" cx="50" cy="26" r="6" />
+              <circle class="yy-light-dot" cx="50" cy="74" r="6" />
+            </svg>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MILESTONES (NEW SECTION) ==================== -->
+  <section id="stats" class="section stats-section">
+    <div class="container">
+      <p class="overline" data-reveal="fade-up">
+        <span class="overline-zh">里程碑</span> MILESTONES
+      </p>
+      <h2 class="section-heading" data-reveal="fade-up">
+        Numbers that <em>speak</em>.
+      </h2>
+      <div class="stats-big-grid scroll-x-mobile" data-reveal="fade-up">
+        <div class="stat-mega">
+          <span class="stat-num" data-count="50">0</span><span class="stat-suffix">+</span>
+          <p>Projects Delivered</p>
+        </div>
+        <div class="stat-mega">
+          <span class="stat-num" data-count="30">0</span><span class="stat-suffix">+</span>
+          <p>Happy Clients</p>
+        </div>
+        <div class="stat-mega">
+          <span class="stat-num" data-count="2">0</span><span class="stat-suffix">yrs</span>
+          <p>Of Experience</p>
+        </div>
+        <div class="stat-mega">
+          <span class="stat-num" data-count="99">0</span><span class="stat-suffix">%</span>
+          <p>Satisfaction Rate</p>
         </div>
       </div>
     </div>
@@ -165,7 +289,7 @@
         <span class="overline-zh">我们的服务</span> WHAT WE DO
       </p>
       <h2 class="section-heading" data-reveal="fade-up">Services</h2>
-      <div class="cards">
+      <div class="cards scroll-x-mobile">
         <div class="card" data-reveal="fade-up" data-delay="0">
           <div class="card-chinese-accent">壹</div>
           <span class="card-num">01</span>
@@ -212,53 +336,65 @@
 
         <div class="swiper-slide project-slide">
           <div class="ps-inner">
-            <div class="ps-header">
-              <span class="ps-num">01</span>
-              <span class="ps-zh">红色门户</span>
+            <div class="ps-content">
+              <div class="ps-header">
+                <span class="ps-num">01</span>
+                <span class="ps-zh">红色门户</span>
+              </div>
+              <h3 class="ps-title">Crimson Portal</h3>
+              <p class="ps-desc">Lunar New Year event platform with real-time interactions and immersive animations.</p>
+              <div class="ps-tags"><span>IMLEK</span><span>LIVE EVENT</span></div>
+              <br>
+              <a href="#" class="arrow-link">View Project →</a>
             </div>
-            <h3 class="ps-title">Crimson Portal</h3>
-            <p class="ps-desc">Lunar New Year event platform with real-time interactions and immersive animations.</p>
-            <div class="ps-tags"><span>IMLEK</span><span>LIVE EVENT</span></div>
-            <a href="#" class="arrow-link">View Project →</a>
           </div>
         </div>
 
         <div class="swiper-slide project-slide">
           <div class="ps-inner">
-            <div class="ps-header">
-              <span class="ps-num">02</span>
-              <span class="ps-zh">灵光界面</span>
+            <div class="ps-content">
+              <div class="ps-header">
+                <span class="ps-num">02</span>
+                <span class="ps-zh">灵光界面</span>
+              </div>
+              <h3 class="ps-title">Aura UI Kit</h3>
+              <p class="ps-desc">Premium component library crafted for modern, design-forward web applications.</p>
+              <div class="ps-tags"><span>UI</span><span>DESIGN SYSTEM</span></div>
+              <br>
+              <a href="#" class="arrow-link">View Project →</a>
             </div>
-            <h3 class="ps-title">Aura UI Kit</h3>
-            <p class="ps-desc">Premium component library crafted for modern, design-forward web applications.</p>
-            <div class="ps-tags"><span>UI</span><span>DESIGN SYSTEM</span></div>
-            <a href="#" class="arrow-link">View Project →</a>
           </div>
         </div>
 
         <div class="swiper-slide project-slide">
           <div class="ps-inner">
-            <div class="ps-header">
-              <span class="ps-num">03</span>
-              <span class="ps-zh">黄金仪表</span>
+            <div class="ps-content">
+              <div class="ps-header">
+                <span class="ps-num">03</span>
+                <span class="ps-zh">黄金仪表</span>
+              </div>
+              <h3 class="ps-title">GoldRush Dashboard</h3>
+              <p class="ps-desc">Finance dashboard with animated data visualisations and live market feeds.</p>
+              <div class="ps-tags"><span>FINTECH</span><span>DATA VIZ</span></div>
+              <br>
+              <a href="#" class="arrow-link">View Project →</a>
             </div>
-            <h3 class="ps-title">GoldRush Dashboard</h3>
-            <p class="ps-desc">Finance dashboard with animated data visualisations and live market feeds.</p>
-            <div class="ps-tags"><span>FINTECH</span><span>DATA VIZ</span></div>
-            <a href="#" class="arrow-link">View Project →</a>
           </div>
         </div>
 
         <div class="swiper-slide project-slide">
           <div class="ps-inner">
-            <div class="ps-header">
-              <span class="ps-num">04</span>
-              <span class="ps-zh">霓虹都市</span>
+            <div class="ps-content">
+              <div class="ps-header">
+                <span class="ps-num">04</span>
+                <span class="ps-zh">霓虹都市</span>
+              </div>
+              <h3 class="ps-title">NeonCity 3D</h3>
+              <p class="ps-desc">WebGL-powered city explorer with procedural neon environments and scroll storytelling.</p>
+              <div class="ps-tags"><span>THREE.JS</span><span>WEBGL</span></div>
+              <br>
+              <a href="#" class="arrow-link">View Project →</a>
             </div>
-            <h3 class="ps-title">NeonCity 3D</h3>
-            <p class="ps-desc">WebGL-powered city explorer with procedural neon environments and scroll storytelling.</p>
-            <div class="ps-tags"><span>THREE.JS</span><span>WEBGL</span></div>
-            <a href="#" class="arrow-link">View Project →</a>
           </div>
         </div>
 
@@ -308,6 +444,35 @@
       <span class="footer-tagline">传奇数字体验</span>
     </div>
   </footer>
+
+  <!-- ==================== DETAIL MODAL ==================== -->
+  <div id="detail-modal" class="detail-modal">
+    <div class="detail-modal-bg"></div>
+    <div class="detail-modal-wrapper">
+      <button class="detail-close" aria-label="Close detail">✕</button>
+      <div class="detail-modal-content">
+        <div class="detail-hero">
+          <div class="detail-zh-tag" id="detail-zh">项目详情</div>
+          <h2 class="detail-title" id="detail-title">Project Name</h2>
+          <div class="detail-tags" id="detail-tags"></div>
+        </div>
+        
+        <div class="detail-body">
+          <p class="detail-desc" id="detail-desc">Loading detailed description outlining the legendary craftsmanship backing this digital experience.</p>
+          <div class="detail-gallery">
+            <div class="dg-placeholder">
+              <div class="dg-overlay"></div>
+              <span>Legendary Visuals</span>
+            </div>
+            <div class="dg-placeholder">
+              <div class="dg-overlay"></div>
+              <span>Premium Showcases</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script type="module" src="./main.js"></script>
 </body>

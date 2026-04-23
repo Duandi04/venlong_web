@@ -144,26 +144,37 @@ document.querySelectorAll('.nav-links button').forEach(btn => {
   });
 });
 
-// Mobile menu
+// Mobile menu GSAP timeline
+const tlMenu = gsap.timeline({ paused: true });
+tlMenu.fromTo('.mobile-link', 
+  { y: '120%', rotateZ: 5, opacity: 0 }, 
+  { y: '0%', rotateZ: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out' }
+);
+
 hamburger.addEventListener('click', () => {
   hamburger.classList.toggle('open');
-  mobileMenu.classList.toggle('open');
-  lenis[mobileMenu.classList.contains('open') ? 'stop' : 'start']();
+  const isOpen = hamburger.classList.contains('open');
+  mobileMenu.classList.toggle('open', isOpen);
+  lenis[isOpen ? 'stop' : 'start']();
+  if (isOpen) tlMenu.restart();
 });
+
 mobileClose.addEventListener('click', () => {
   hamburger.classList.remove('open');
   mobileMenu.classList.remove('open');
   lenis.start();
 });
+
 document.querySelectorAll('.mobile-link').forEach(btn => {
   btn.addEventListener('click', () => {
     const el = document.getElementById(btn.dataset.target);
     hamburger.classList.remove('open');
     mobileMenu.classList.remove('open');
     lenis.start();
-    setTimeout(() => { if (el) lenis.scrollTo(el, { offset:-80, duration:1.6 }); }, 300);
+    setTimeout(() => { if (el) lenis.scrollTo(el, { offset:-80, duration:1.6 }); }, 200);
   });
 });
+
 
 /* ─────────────────────────────────────────────────────────────
    6. HERO — cinematic scrub
@@ -344,3 +355,93 @@ const loadTl = gsap.timeline();
 loadTl
   .from('#navbar', { y: -60, opacity: 0, duration: .9, ease: 'power3.out' })
   .from('.deco-left, .deco-right', { opacity: 0, duration: 1 }, '-=.4');
+
+/* ─────────────────────────────────────────────────────────────
+   15. 3D HOVER TILT (Projects & Angpao)
+───────────────────────────────────────────────────────────── */
+document.querySelectorAll('.ps-inner, .about-angpao').forEach(el => {
+  el.addEventListener('mousemove', e => {
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Normalize coordinates (-1 to 1)
+    const xNorm = (x / rect.width - 0.5) * 2;
+    const yNorm = (y / rect.height - 0.5) * 2;
+    
+    // Calculate rotation (max 10 degrees)
+    const rotateX = yNorm * -10;
+    const rotateY = xNorm * 10;
+    
+    gsap.to(el, {
+      rotateX: rotateX,
+      rotateY: rotateY,
+      duration: 0.5,
+      ease: 'power2.out',
+      transformPerspective: 1200
+    });
+  });
+  
+  el.addEventListener('mouseleave', () => {
+    gsap.to(el, {
+      rotateX: 0,
+      rotateY: 0,
+      duration: 1.2,
+      ease: 'elastic.out(1, 0.4)'
+    });
+  });
+});
+
+/* ─────────────────────────────────────────────────────────────
+   16. DETAIL MODAL (Cinematic Full-Screen Overlay)
+───────────────────────────────────────────────────────────── */
+const detailModal = document.getElementById('detail-modal');
+const detailCloseBtn = document.querySelector('.detail-close');
+const detailTitle = document.getElementById('detail-title');
+const detailDesc = document.getElementById('detail-desc');
+const detailTags = document.getElementById('detail-tags');
+const detailZh = document.getElementById('detail-zh');
+
+document.querySelectorAll('.card, .ps-inner').forEach(item => {
+  item.addEventListener('click', () => {
+    let title, desc, zh, tagsHtml;
+    
+    if (item.classList.contains('ps-inner')) {
+      title = item.querySelector('.ps-title').innerText;
+      desc = item.querySelector('.ps-desc').innerText;
+      zh = item.querySelector('.ps-zh').innerText;
+      const tags = Array.from(item.querySelectorAll('.ps-tags span')).map(s => `<span>${s.innerText}</span>`);
+      tagsHtml = tags.join('');
+    } else {
+      title = item.querySelector('h3').innerText;
+      desc = item.querySelector('p').innerText;
+      zh = item.querySelector('.card-footer').innerText;
+      tagsHtml = `<span>Premium Service</span><span>Digital</span>`;
+    }
+
+    // Populate modal content dynamically
+    detailTitle.innerText = title;
+    detailDesc.innerText = desc;
+    detailZh.innerText = zh;
+    detailTags.innerHTML = tagsHtml;
+
+    // Show GSAP overlay
+    detailModal.classList.add('active');
+    lenis.stop();
+  });
+});
+
+if (detailCloseBtn) {
+  detailCloseBtn.addEventListener('click', () => {
+    detailModal.classList.remove('active');
+    lenis.start();
+  });
+}
+
+/* Toggle Angpao manually on Mobile Tap */
+const angpao = document.querySelector('.about-angpao');
+if (angpao) {
+  angpao.addEventListener('click', () => {
+    angpao.classList.toggle('open');
+  });
+}
