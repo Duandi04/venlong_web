@@ -1,479 +1,509 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="dark">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Venlong — Legendary Digital Experiences</title>
-  <meta name="description" content="Venlong — A premium digital studio crafting legendary web experiences with Chinese-inspired elegance." />
-  <link rel="icon" type="image/png" href="/logo.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./style.css" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Venlong — Legendary Digital Experiences</title>
+    <meta
+      name="description"
+      content="Venlong — A premium digital studio crafting legendary web experiences with Chinese-inspired elegance."
+    />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Noto+Serif+SC:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- CURSOR FOLLOWER -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
 
-  <!-- CURSOR FOLLOWER -->
-  <div id="cursor-dot"></div>
-  <div id="cursor-ring"></div>
+    <!-- PARTICLE CANVAS -->
+    <canvas id="particle-canvas"></canvas>
 
-  <!-- PARTICLE CANVAS -->
-  <canvas id="particle-canvas"></canvas>
-
-  <!-- CHINESE DECORATIVE ELEMENTS -->
-  <div class="deco-left" aria-hidden="true">
-    <div class="deco-line"></div>
-    <div class="deco-diamond"></div>
-    <div class="deco-line"></div>
-  </div>
-  <div class="deco-right" aria-hidden="true">
-    <div class="deco-line"></div>
-    <div class="deco-diamond"></div>
-    <div class="deco-line"></div>
-  </div>
-
-  <!-- ==================== NAVBAR ==================== -->
-  <nav id="navbar">
-    <div class="nav-brand">
-      <img src="/logo.png" alt="Venlong Logo" class="nav-logo" />
-      <span class="nav-brand-text">VENLONG</span>
-      <span class="nav-brand-chinese">文龙</span>
+    <!-- CHINESE DECORATIVE ELEMENTS -->
+    <div class="deco-left" aria-hidden="true">
+      <div class="deco-line"></div>
+      <div class="deco-diamond"></div>
+      <div class="deco-line"></div>
+    </div>
+    <div class="deco-right" aria-hidden="true">
+      <div class="deco-line"></div>
+      <div class="deco-diamond"></div>
+      <div class="deco-line"></div>
     </div>
 
-    <div class="nav-links" id="nav-links">
-      <button data-target="about" id="nav-about">关于 About</button>
-      <button data-target="stats" id="nav-stats">里程碑 Stats</button>
-      <button data-target="services" id="nav-services">服务 Services</button>
-      <button data-target="projects" id="nav-projects">作品 Projects</button>
-      <button data-target="contact" id="nav-contact">联系 Contact</button>
-    </div>
+    <!-- ==================== NAVBAR ==================== -->
+    <nav id="navbar">
+      <div class="nav-brand">
+        <img src="/logo.png" alt="Venlong Logo" class="nav-logo" />
+        <span class="nav-brand-text">VENLONG</span>
+        <span class="nav-brand-chinese">文龙</span>
+      </div>
 
-    <div class="nav-actions">
-      <!-- Theme Toggle -->
-      <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
-        <span class="theme-icon theme-icon--sun">☀️</span>
-        <span class="theme-icon theme-icon--moon">🌙</span>
+      <div class="nav-links" id="nav-links">
+        <button data-target="about" id="nav-about">关于 About</button>
+        <button data-target="stats" id="nav-stats">里程碑 Stats</button>
+        <button data-target="services" id="nav-services">服务 Services</button>
+        <button data-target="projects" id="nav-projects">作品 Projects</button>
+        <button data-target="contact" id="nav-contact">联系 Contact</button>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
+          <span class="theme-icon theme-icon--sun">☀️</span>
+          <span class="theme-icon theme-icon--moon">🌙</span>
+        </button>
+        <!-- Mobile Hamburger -->
+        <button id="hamburger" class="hamburger" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- MOBILE MENU OVERLAY -->
+    <div id="mobile-menu" class="mobile-menu">
+      <button class="mobile-close" id="mobile-close" aria-label="Close menu">
+        ✕
       </button>
-      <!-- Mobile Hamburger -->
-      <button id="hamburger" class="hamburger" aria-label="Open menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- MOBILE MENU OVERLAY -->
-  <div id="mobile-menu" class="mobile-menu">
-    <button class="mobile-close" id="mobile-close" aria-label="Close menu">✕</button>
-    <div class="mobile-menu-inner">
-      <div class="mobile-link-wrap"><button data-target="about" class="mobile-link">关于/About</button></div>
-      <div class="mobile-link-wrap"><button data-target="stats" class="mobile-link">里程碑/Stats</button></div>
-      <div class="mobile-link-wrap"><button data-target="services" class="mobile-link">服务/Services</button></div>
-      <div class="mobile-link-wrap"><button data-target="projects" class="mobile-link">作品/Projects</button></div>
-      <div class="mobile-link-wrap"><button data-target="contact" class="mobile-link">联系/Contact</button></div>
-    </div>
-    <div class="mobile-menu-footer">文龙 VENLONG</div>
-  </div>
-
-  <!-- ==================== HERO ==================== -->
-  <section id="hero">
-    <div class="hero-stage">
-
-      <!-- layer 1 — full bleed photo -->
-      <div id="hero-img-layer">
-        <img src="/hero.png" alt="" id="hero-img" />
-        <div class="hero-overlay"></div>
-      </div>
-
-      <!-- Floating lanterns -->
-      <div class="lantern lantern-1" aria-hidden="true">
-        <div class="lantern-body">🏮</div>
-      </div>
-      <div class="lantern lantern-2" aria-hidden="true">
-        <div class="lantern-body">🏮</div>
-      </div>
-      <div class="lantern lantern-3" aria-hidden="true">
-        <div class="lantern-body">🏮</div>
-      </div>
-
-      <!-- layer 2 — VENLONG text -->
-      <div id="hero-text-layer">
-        <div class="hero-eyebrow">
-          <span class="hero-eyebrow-zh">文龙传奇</span>
-          <span class="hero-eyebrow-sep">·</span>
-          <span>EST. 2024</span>
+      <div class="mobile-menu-inner">
+        <div class="mobile-link-wrap">
+          <button data-target="about" class="mobile-link">关于/About</button>
         </div>
-        <h1 id="hero-title">VENLONG</h1>
-        <p id="hero-tagline">The Future of Digital Experiences</p>
-        <p id="hero-tagline-zh">传奇数字体验的未来</p>
-        <div class="hero-scroll-hint" id="hero-scroll-hint">
-          <span>SCROLL</span>
-          <div class="scroll-line"></div>
+        <div class="mobile-link-wrap">
+          <button data-target="stats" class="mobile-link">里程碑/Stats</button>
+        </div>
+        <div class="mobile-link-wrap">
+          <button data-target="services" class="mobile-link">
+            服务/Services
+          </button>
+        </div>
+        <div class="mobile-link-wrap">
+          <button data-target="projects" class="mobile-link">
+            作品/Projects
+          </button>
+        </div>
+        <div class="mobile-link-wrap">
+          <button data-target="contact" class="mobile-link">
+            联系/Contact
+          </button>
         </div>
       </div>
-
+      <div class="mobile-menu-footer">文龙 VENLONG</div>
     </div>
-  </section>
 
-  <!-- ==================== ABOUT ==================== -->
-  <section id="about" class="section">
-    <div class="container">
-      <div class="about-grid">
-        <div class="about-left">
-          <p class="overline" data-reveal="fade-up">
-            <span class="overline-zh">关于我们</span> WHO WE ARE
-          </p>
-          <h2 class="section-heading" data-reveal="fade-up">
-            We craft<br><em>legendary</em><br>web experiences.
-          </h2>
-          <p class="section-body" data-reveal="fade-up">
-            Venlong is a digital studio at the intersection of technology and premium design.
-            We don't just build websites — we build moments people remember.
-          </p>
-          <p class="section-body-zh" data-reveal="fade-up">
-            文龙是一家融合技术与高端设计的数字工作室。我们不只是建设网站——我们创造令人铭记的数字体验。
-          </p>
+    <!-- ==================== HERO ==================== -->
+    <section id="hero">
+      <div class="hero-stage">
+        <!-- layer 1 — full bleed photo -->
+        <div id="hero-img-layer">
+          <img src="/hero.png" alt="" id="hero-img" />
+          <div class="hero-overlay"></div>
         </div>
-        <div class="about-right" data-reveal="fade-up">
-          <!-- INTERACTIVE ANGPAO (Ultra-Realistic SVG) -->
-          <div class="about-angpao env-wrapper" aria-label="Interactive Angpao">
-            <!-- 1. Envelop Back & Inner Darkness -->
-            <svg class="env-back" viewBox="0 0 200 300" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="back-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="#5a000a" />
-                  <stop offset="100%" stop-color="#2a0004" />
-                </linearGradient>
-              </defs>
-              <rect x="0" y="0" width="200" height="300" rx="8" ry="8" fill="url(#back-grad)" />
-            </svg>
-            
-            <!-- 2. The Letter/Paper Inside -->
-            <div class="env-paper">
-              <div class="env-paper-inner">
-                <div class="profile-name">Founder</div>
-                <div class="profile-role">首席执行官</div>
-                <div class="angpao-details">A legend in digital craftsmanship, merging code with ancient philosophy to build stunning digital realms.</div>
+
+        <!-- Floating lanterns -->
+        <div class="lantern lantern-1" aria-hidden="true">
+          <div class="lantern-body">🏮</div>
+        </div>
+        <div class="lantern lantern-2" aria-hidden="true">
+          <div class="lantern-body">🏮</div>
+        </div>
+        <div class="lantern lantern-3" aria-hidden="true">
+          <div class="lantern-body">🏮</div>
+        </div>
+
+        <!-- layer 2 — VENLONG text -->
+        <div id="hero-text-layer">
+          <div class="hero-eyebrow">
+            <span class="hero-eyebrow-zh">文龙传奇</span>
+            <span class="hero-eyebrow-sep">·</span>
+            <span>EST. 2024</span>
+          </div>
+          <h1 id="hero-title">VENLONG</h1>
+          <p id="hero-tagline">The Future of Digital Experiences</p>
+          <p id="hero-tagline-zh">传奇数字体验的未来</p>
+          <div class="hero-scroll-hint" id="hero-scroll-hint">
+            <span>SCROLL</span>
+            <div class="scroll-line"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ABOUT ==================== -->
+    <section id="about" class="section">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-left">
+            <p class="overline" data-reveal="fade-up">
+              <span class="overline-zh">关于我们</span> WHO WE ARE
+            </p>
+            <h2 class="section-heading" data-reveal="fade-up">
+              We craft<br /><em>legendary</em><br />web experiences.
+            </h2>
+            <p class="section-body" data-reveal="fade-up">
+              Venlong is a digital studio at the intersection of technology and
+              premium design. We don't just build websites — we build moments
+              people remember.
+            </p>
+            <p class="section-body-zh" data-reveal="fade-up">
+              文龙是一家融合技术与高端设计的数字工作室。我们不只是建设网站——我们创造令人铭记的数字体验。
+            </p>
+          </div>
+          <div class="about-right" data-reveal="fade-up">
+            <!-- PREMIUM PURE CSS ANGPAO -->
+            <div class="about-angpao" aria-label="Interactive Angpao">
+              <!-- 1. Body of envelope -->
+              <div class="env-back"></div>
+
+              <!-- 2. Paper slot (clips the paper) -->
+              <div class="env-paper-slot">
+                <div class="env-paper">
+                  <div class="env-paper-inner">
+                    <div class="profile-name">Founder</div>
+                    <div class="profile-role">首席执行官</div>
+                    <div class="angpao-details">
+                      A legend in digital craftsmanship, merging code with ancient philosophy to build stunning digital realms.
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            
-            <!-- 3. Envelope Front (Left, Right, Bottom locked in) -->
-            <svg class="env-front" viewBox="0 0 200 300" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="flap-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#d9001b" />
-                  <stop offset="100%" stop-color="#990012" />
-                </linearGradient>
-                <linearGradient id="flap-grad-dark" x1="0%" y1="100%" x2="0%" y2="0%">
-                  <stop offset="0%" stop-color="#e60012" />
-                  <stop offset="100%" stop-color="#b30015" />
-                </linearGradient>
-                <!-- Shadows -->
-                <filter id="shadow-left" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="-2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/>
-                </filter>
-                <filter id="shadow-right" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/>
-                </filter>
-                <filter id="shadow-bottom" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="-4" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
-                </filter>
-                <!-- Gold Foil Pattern -->
-                <pattern id="gold-dots" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
-                  <circle cx="2" cy="2" r="1" fill="rgba(212,175,55,0.15)"/>
-                </pattern>
-                
-                <clipPath id="front-clip">
-                  <rect x="0" y="0" width="200" height="300" rx="8" ry="8" />
-                </clipPath>
-              </defs>
-              
-              <g clip-path="url(#front-clip)">
-                <!-- Base textured red -->
-                <rect x="0" y="0" width="200" height="300" fill="url(#gold-dots)" />
-                <!-- Left Flap -->
-                <path d="M0 0 L90 140 L0 300 Z" fill="url(#flap-grad)" filter="url(#shadow-left)"/>
-                <!-- Right Flap -->
-                <path d="M200 0 L110 140 L200 300 Z" fill="url(#flap-grad)" filter="url(#shadow-right)"/>
-                <!-- Bottom Flap -->
-                <path d="M-10 310 L100 160 L210 310 Z" fill="url(#flap-grad-dark)" filter="url(#shadow-bottom)"/>
-              </g>
-            </svg>
 
-            <!-- 4. Envelope Top Hinge (Rotates Up) -->
-            <div class="env-top-wrap">
-              <svg class="env-top-flap" viewBox="0 0 200 160" preserveAspectRatio="none">
-                <defs>
-                  <filter id="shadow-top" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000" flood-opacity="0.7"/>
-                  </filter>
-                  <linearGradient id="flap-grad-top" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#cc0018" />
-                    <stop offset="100%" stop-color="#ff1a33" />
-                  </linearGradient>
-                  
-                  <clipPath id="top-clip">
-                    <rect x="0" y="0" width="200" height="160" rx="8" ry="8" />
-                  </clipPath>
-                </defs>
-                <g clip-path="url(#top-clip)">
-                  <!-- Pointy Flap -->
-                  <path d="M-10 -10 L100 130 L210 -10 Z" fill="url(#flap-grad-top)" filter="url(#shadow-top)"/>
-                  
-                  <!-- Golden Seal Base -->
-                  <circle cx="100" cy="120" r="24" fill="url(#top-gold)" filter="url(#shadow-top)" />
-                  <!-- Gold Seal Ring -->
-                  <circle cx="100" cy="120" r="20" fill="none" stroke="#ffeb99" stroke-width="1.5" stroke-dasharray="3 3"/>
-                  
-                  <radialGradient id="top-gold" cx="30%" cy="30%">
-                    <stop offset="0%" stop-color="#ffe680"/>
-                    <stop offset="100%" stop-color="#ccaa00"/>
-                  </radialGradient>
-                  
-                  <text x="100" y="129" fill="#5a000a" font-family="Noto Serif SC" font-size="22" font-weight="900" text-anchor="middle">福</text>
-                </g>
+              <!-- 3. Front diamond flaps (overlay) -->
+              <div class="env-front-wrapper">
+                <div class="env-flap-left"></div>
+                <div class="env-flap-right"></div>
+                <div class="env-flap-bottom"></div>
+              </div>
+
+              <!-- 4. Top triangular flap (opens on click) -->
+              <div class="env-top-wrap">
+                <div class="env-flap-top"></div>
+              </div>
+              <!-- Gold seal sits at the seam, above all -->
+              <div class="env-seal">福</div>
+            </div>
+
+            <div class="about-chinese-art" aria-hidden="true">
+              <svg
+                class="yin-yang-svg"
+                viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="48"
+                  fill="transparent"
+                  stroke="var(--gold)"
+                  stroke-width="2"
+                />
+                <!-- Right side (Light in dark theme) -->
+                <path
+                  class="yy-light"
+                  d="M50 2 a48 48 0 0 1 0 96 a24 24 0 0 0 0 -48 a24 24 0 0 1 0 -48"
+                />
+                <!-- Left side (Dark in dark theme) -->
+                <path
+                  class="yy-dark"
+                  d="M50 2 a48 48 0 0 0 0 96 a24 24 0 0 0 0 -48 a24 24 0 0 1 0 -48"
+                />
+                <!-- Dots -->
+                <circle class="yy-dark-dot" cx="50" cy="26" r="6" />
+                <circle class="yy-light-dot" cx="50" cy="74" r="6" />
               </svg>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <div class="about-chinese-art" aria-hidden="true">
-            <svg class="yin-yang-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="48" fill="transparent" stroke="var(--gold)" stroke-width="2"/>
-              <!-- Right side (Light in dark theme) -->
-              <path class="yy-light" d="M50 2 a48 48 0 0 1 0 96 a24 24 0 0 0 0 -48 a24 24 0 0 1 0 -48" />
-              <!-- Left side (Dark in dark theme) -->
-              <path class="yy-dark" d="M50 2 a48 48 0 0 0 0 96 a24 24 0 0 0 0 -48 a24 24 0 0 1 0 -48" />
-              <!-- Dots -->
-              <circle class="yy-dark-dot" cx="50" cy="26" r="6" />
-              <circle class="yy-light-dot" cx="50" cy="74" r="6" />
+    <!-- ==================== MILESTONES (NEW SECTION) ==================== -->
+    <section id="stats" class="section stats-section">
+      <div class="container">
+        <p class="overline" data-reveal="fade-up">
+          <span class="overline-zh">里程碑</span> MILESTONES
+        </p>
+        <h2 class="section-heading" data-reveal="fade-up">
+          Numbers that <em>speak</em>.
+        </h2>
+        <div class="stats-big-grid scroll-x-mobile" data-reveal="fade-up">
+          <div class="stat-mega">
+            <span class="stat-num" data-count="50">0</span
+            ><span class="stat-suffix">+</span>
+            <p>Projects Delivered</p>
+          </div>
+          <div class="stat-mega">
+            <span class="stat-num" data-count="30">0</span
+            ><span class="stat-suffix">+</span>
+            <p>Happy Clients</p>
+          </div>
+          <div class="stat-mega">
+            <span class="stat-num" data-count="2">0</span
+            ><span class="stat-suffix">yrs</span>
+            <p>Of Experience</p>
+          </div>
+          <div class="stat-mega">
+            <span class="stat-num" data-count="99">0</span
+            ><span class="stat-suffix">%</span>
+            <p>Satisfaction Rate</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SERVICES ==================== -->
+    <section id="services" class="section section--alt">
+      <div class="container">
+        <p class="overline" data-reveal="fade-up">
+          <span class="overline-zh">我们的服务</span> WHAT WE DO
+        </p>
+        <h2 class="section-heading" data-reveal="fade-up">Services</h2>
+        <div class="cards scroll-x-mobile">
+          <div class="card" data-reveal="fade-up" data-delay="0" data-id="web-dev">
+            <div class="card-chinese-accent">壹</div>
+            <span class="card-num">01</span>
+            <h3>Web Development</h3>
+            <p>
+              High-performance, modern web applications built with precision and
+              craft.
+            </p>
+            <div class="card-footer">网站开发</div>
+          </div>
+          <div class="card" data-reveal="fade-up" data-delay="1" data-id="ui-ux">
+            <div class="card-chinese-accent">贰</div>
+            <span class="card-num">02</span>
+            <h3>UI / UX Design</h3>
+            <p>
+              Interfaces that are beautiful by default and intuitive by design.
+            </p>
+            <div class="card-footer">界面设计</div>
+          </div>
+          <div class="card" data-reveal="fade-up" data-delay="2" data-id="brand">
+            <div class="card-chinese-accent">叁</div>
+            <span class="card-num">03</span>
+            <h3>Brand Identity</h3>
+            <p>Visual languages that make your brand impossible to forget.</p>
+            <div class="card-footer">品牌形象</div>
+          </div>
+          <div class="card" data-reveal="fade-up" data-delay="3" data-id="motion">
+            <div class="card-chinese-accent">肆</div>
+            <span class="card-num">04</span>
+            <h3>Motion &amp; 3D</h3>
+            <p>Scroll animations and interactive 3D that tell your story.</p>
+            <div class="card-footer">动效三维</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PROJECTS ==================== -->
+    <section id="projects" class="section">
+      <div class="container">
+        <p class="overline" data-reveal="fade-up">
+          <span class="overline-zh">精选作品</span> OUR WORK
+        </p>
+        <h2 class="section-heading" data-reveal="fade-up">Projects</h2>
+      </div>
+
+      <div class="swiper projects-swiper" data-reveal="fade-up">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide project-slide">
+              <div class="ps-inner" data-id="crimson-portal">
+                <div class="ps-content">
+                  <div class="ps-header">
+                    <span class="ps-num">01</span>
+                    <span class="ps-zh">红色门户</span>
+                  </div>
+                  <h3 class="ps-title">Crimson Portal</h3>
+                  <p class="ps-desc">Lunar New Year event platform with real-time interactions and immersive animations.</p>
+                  <div class="ps-tags"><span>IMLEK</span><span>LIVE EVENT</span></div>
+                  <br />
+                  <span class="arrow-link">Explore Project →</span>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide project-slide">
+              <div class="ps-inner" data-id="aura-ui">
+                <div class="ps-content">
+                  <div class="ps-header">
+                    <span class="ps-num">02</span>
+                    <span class="ps-zh">灵光界面</span>
+                  </div>
+                  <h3 class="ps-title">Aura UI Kit</h3>
+                  <p class="ps-desc">Premium component library crafted for modern, design-forward web applications.</p>
+                  <div class="ps-tags"><span>UI</span><span>DESIGN SYSTEM</span></div>
+                  <br />
+                  <span class="arrow-link">Explore Project →</span>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide project-slide">
+              <div class="ps-inner" data-id="goldrush">
+                <div class="ps-content">
+                  <div class="ps-header">
+                    <span class="ps-num">03</span>
+                    <span class="ps-zh">黄金仪表</span>
+                  </div>
+                  <h3 class="ps-title">GoldRush Dashboard</h3>
+                  <p class="ps-desc">Finance dashboard with animated data visualisations and live market feeds.</p>
+                  <div class="ps-tags"><span>FINTECH</span><span>DATA VIZ</span></div>
+                  <br />
+                  <span class="arrow-link">Explore Project →</span>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide project-slide">
+              <div class="ps-inner" data-id="neoncity">
+                <div class="ps-content">
+                  <div class="ps-header">
+                    <span class="ps-num">04</span>
+                    <span class="ps-zh">霸虹都市</span>
+                  </div>
+                  <h3 class="ps-title">NeonCity 3D</h3>
+                  <p class="ps-desc">WebGL-powered city explorer with procedural neon environments and scroll storytelling.</p>
+                  <div class="ps-tags"><span>THREE.JS</span><span>WEBGL</span></div>
+                  <br />
+                  <span class="arrow-link">Explore Project →</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-pagination projects-pagination"></div>
+          <div class="swiper-button-prev projects-prev"></div>
+          <div class="swiper-button-next projects-next"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CONTACT ==================== -->
+    <section id="contact" class="section section--alt">
+      <div class="container">
+        <p class="overline" data-reveal="fade-up">
+          <span class="overline-zh">联系我们</span> GET IN TOUCH
+        </p>
+        <h2 class="section-heading contact-heading" data-reveal="fade-up">
+          Let's build<br />something<br /><em>legendary.</em>
+        </h2>
+        <p class="section-body-zh contact-zh" data-reveal="fade-up">
+          共同缔造传奇
+        </p>
+
+        <div class="contact-links" data-reveal="fade-up">
+          <a
+            href="https://instagram.com/venlong"
+            target="_blank"
+            class="contact-btn"
+            id="btn-ig"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.336 3.608 1.311.975.975 1.249 2.242 1.311 3.608.058 1.266.069 1.646.069 4.848s-.011 3.582-.069 4.849c-.062 1.366-.336 2.633-1.311 3.607-.975.976-2.242 1.249-3.608 1.312-1.266.057-1.646.069-4.85.069s-3.584-.012-4.849-.069c-1.366-.063-2.633-.336-3.607-1.312C2.499 19.433 2.226 18.166 2.163 16.8 2.106 15.534 2.094 15.154 2.094 11.95s.012-3.582.069-4.849c.063-1.366.336-2.633 1.312-3.607C4.449 2.499 5.716 2.226 7.082 2.163 8.348 2.106 8.728 2.094 12 2.094zm0-2.163c-3.259 0-3.667.014-4.947.072-1.52.069-2.888.373-3.989 1.473C1.963 2.485 1.659 3.853 1.59 5.373 1.532 6.653 1.518 7.061 1.518 12s.014 5.347.072 6.627c.069 1.52.373 2.888 1.474 3.988 1.1 1.1 2.468 1.404 3.988 1.474 1.28.058 1.688.072 4.948.072s3.668-.014 4.948-.072c1.52-.07 2.888-.374 3.988-1.474 1.1-1.1 1.404-2.468 1.474-3.988.058-1.28.072-1.688.072-6.627s-.014-5.347-.072-6.627c-.07-1.52-.374-2.888-1.474-3.988C19.836.373 18.468.069 16.948 0 15.668-.058 15.26-.072 12-.072zm0 5.838A6.162 6.162 0 0 0 5.838 12 6.162 6.162 0 0 0 12 18.162 6.162 6.162 0 0 0 18.162 12 6.162 6.162 0 0 0 12 5.838zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"
+              />
             </svg>
-          </div>
+            Instagram
+          </a>
+          <a
+            href="https://youtube.com/@venlong"
+            target="_blank"
+            class="contact-btn"
+            id="btn-yt"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"
+              />
+            </svg>
+            YouTube
+          </a>
+          <a
+            href="https://discord.gg/venlong"
+            target="_blank"
+            class="contact-btn"
+            id="btn-dc"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"
+              />
+            </svg>
+            Discord
+          </a>
+          <a href="mailto:hello@venlong.com" class="contact-btn" id="btn-mail">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"
+              />
+            </svg>
+            Email
+          </a>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ==================== MILESTONES (NEW SECTION) ==================== -->
-  <section id="stats" class="section stats-section">
-    <div class="container">
-      <p class="overline" data-reveal="fade-up">
-        <span class="overline-zh">里程碑</span> MILESTONES
-      </p>
-      <h2 class="section-heading" data-reveal="fade-up">
-        Numbers that <em>speak</em>.
-      </h2>
-      <div class="stats-big-grid scroll-x-mobile" data-reveal="fade-up">
-        <div class="stat-mega">
-          <span class="stat-num" data-count="50">0</span><span class="stat-suffix">+</span>
-          <p>Projects Delivered</p>
-        </div>
-        <div class="stat-mega">
-          <span class="stat-num" data-count="30">0</span><span class="stat-suffix">+</span>
-          <p>Happy Clients</p>
-        </div>
-        <div class="stat-mega">
-          <span class="stat-num" data-count="2">0</span><span class="stat-suffix">yrs</span>
-          <p>Of Experience</p>
-        </div>
-        <div class="stat-mega">
-          <span class="stat-num" data-count="99">0</span><span class="stat-suffix">%</span>
-          <p>Satisfaction Rate</p>
-        </div>
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-zh">文龙工作室</span>
+        <span>© 2024 Venlong. All rights reserved.</span>
+        <span class="footer-tagline">传奇数字体验</span>
       </div>
-    </div>
-  </section>
+    </footer>
 
-  <!-- ==================== SERVICES ==================== -->
-  <section id="services" class="section section--alt">
-    <div class="container">
-      <p class="overline" data-reveal="fade-up">
-        <span class="overline-zh">我们的服务</span> WHAT WE DO
-      </p>
-      <h2 class="section-heading" data-reveal="fade-up">Services</h2>
-      <div class="cards scroll-x-mobile">
-        <div class="card" data-reveal="fade-up" data-delay="0">
-          <div class="card-chinese-accent">壹</div>
-          <span class="card-num">01</span>
-          <h3>Web Development</h3>
-          <p>High-performance, modern web applications built with precision and craft.</p>
-          <div class="card-footer">网站开发</div>
-        </div>
-        <div class="card" data-reveal="fade-up" data-delay="1">
-          <div class="card-chinese-accent">贰</div>
-          <span class="card-num">02</span>
-          <h3>UI / UX Design</h3>
-          <p>Interfaces that are beautiful by default and intuitive by design.</p>
-          <div class="card-footer">界面设计</div>
-        </div>
-        <div class="card" data-reveal="fade-up" data-delay="2">
-          <div class="card-chinese-accent">叁</div>
-          <span class="card-num">03</span>
-          <h3>Brand Identity</h3>
-          <p>Visual languages that make your brand impossible to forget.</p>
-          <div class="card-footer">品牌形象</div>
-        </div>
-        <div class="card" data-reveal="fade-up" data-delay="3">
-          <div class="card-chinese-accent">肆</div>
-          <span class="card-num">04</span>
-          <h3>Motion &amp; 3D</h3>
-          <p>Scroll animations and interactive 3D that tell your story.</p>
-          <div class="card-footer">动效三维</div>
-        </div>
+    <!-- ==================== SERVICE PANEL ==================== -->
+    <div id="service-panel" class="sp-overlay" aria-modal="true" role="dialog">
+      <div class="sp-close-btn" id="sp-close" aria-label="Close service panel">✕</div>
+      <div class="sp-bg-deco" aria-hidden="true">
+        <div class="sp-deco-circle sp-deco-circle--1"></div>
+        <div class="sp-deco-circle sp-deco-circle--2"></div>
+        <div class="sp-deco-ring"></div>
+        <div class="sp-num-bg" id="sp-num-bg"></div>
       </div>
-    </div>
-  </section>
-
-  <!-- ==================== PROJECTS ==================== -->
-  <section id="projects" class="section">
-    <div class="container">
-      <p class="overline" data-reveal="fade-up">
-        <span class="overline-zh">精选作品</span> OUR WORK
-      </p>
-      <h2 class="section-heading" data-reveal="fade-up">Projects</h2>
-    </div>
-
-    <div class="swiper projects-swiper" data-reveal="fade-up">
-      <div class="swiper-wrapper">
-
-        <div class="swiper-slide project-slide">
-          <div class="ps-inner">
-            <div class="ps-content">
-              <div class="ps-header">
-                <span class="ps-num">01</span>
-                <span class="ps-zh">红色门户</span>
-              </div>
-              <h3 class="ps-title">Crimson Portal</h3>
-              <p class="ps-desc">Lunar New Year event platform with real-time interactions and immersive animations.</p>
-              <div class="ps-tags"><span>IMLEK</span><span>LIVE EVENT</span></div>
-              <br>
-              <a href="#" class="arrow-link">View Project →</a>
-            </div>
-          </div>
+      <div class="sp-inner">
+        <div class="sp-left">
+          <p class="sp-eyebrow"><span id="sp-num-label">01</span> <span class="sp-sep">·</span> <span id="sp-zh-label">服务</span></p>
+          <h2 class="sp-title" id="sp-title">Service Name</h2>
+          <p class="sp-body" id="sp-body">Description goes here.</p>
+          <ul class="sp-features" id="sp-features"></ul>
+          <button class="sp-cta" id="sp-cta-btn">Get Started →</button>
         </div>
-
-        <div class="swiper-slide project-slide">
-          <div class="ps-inner">
-            <div class="ps-content">
-              <div class="ps-header">
-                <span class="ps-num">02</span>
-                <span class="ps-zh">灵光界面</span>
-              </div>
-              <h3 class="ps-title">Aura UI Kit</h3>
-              <p class="ps-desc">Premium component library crafted for modern, design-forward web applications.</p>
-              <div class="ps-tags"><span>UI</span><span>DESIGN SYSTEM</span></div>
-              <br>
-              <a href="#" class="arrow-link">View Project →</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="swiper-slide project-slide">
-          <div class="ps-inner">
-            <div class="ps-content">
-              <div class="ps-header">
-                <span class="ps-num">03</span>
-                <span class="ps-zh">黄金仪表</span>
-              </div>
-              <h3 class="ps-title">GoldRush Dashboard</h3>
-              <p class="ps-desc">Finance dashboard with animated data visualisations and live market feeds.</p>
-              <div class="ps-tags"><span>FINTECH</span><span>DATA VIZ</span></div>
-              <br>
-              <a href="#" class="arrow-link">View Project →</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="swiper-slide project-slide">
-          <div class="ps-inner">
-            <div class="ps-content">
-              <div class="ps-header">
-                <span class="ps-num">04</span>
-                <span class="ps-zh">霓虹都市</span>
-              </div>
-              <h3 class="ps-title">NeonCity 3D</h3>
-              <p class="ps-desc">WebGL-powered city explorer with procedural neon environments and scroll storytelling.</p>
-              <div class="ps-tags"><span>THREE.JS</span><span>WEBGL</span></div>
-              <br>
-              <a href="#" class="arrow-link">View Project →</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <div class="swiper-pagination projects-pagination"></div>
-      <div class="swiper-button-prev projects-prev"></div>
-      <div class="swiper-button-next projects-next"></div>
-    </div>
-  </section>
-
-  <!-- ==================== CONTACT ==================== -->
-  <section id="contact" class="section section--alt">
-    <div class="container">
-      <p class="overline" data-reveal="fade-up">
-        <span class="overline-zh">联系我们</span> GET IN TOUCH
-      </p>
-      <h2 class="section-heading contact-heading" data-reveal="fade-up">
-        Let's build<br>something<br><em>legendary.</em>
-      </h2>
-      <p class="section-body-zh contact-zh" data-reveal="fade-up">共同缔造传奇</p>
-
-      <div class="contact-links" data-reveal="fade-up">
-        <a href="https://instagram.com/venlong" target="_blank" class="contact-btn" id="btn-ig">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.336 3.608 1.311.975.975 1.249 2.242 1.311 3.608.058 1.266.069 1.646.069 4.848s-.011 3.582-.069 4.849c-.062 1.366-.336 2.633-1.311 3.607-.975.976-2.242 1.249-3.608 1.312-1.266.057-1.646.069-4.85.069s-3.584-.012-4.849-.069c-1.366-.063-2.633-.336-3.607-1.312C2.499 19.433 2.226 18.166 2.163 16.8 2.106 15.534 2.094 15.154 2.094 11.95s.012-3.582.069-4.849c.063-1.366.336-2.633 1.312-3.607C4.449 2.499 5.716 2.226 7.082 2.163 8.348 2.106 8.728 2.094 12 2.094zm0-2.163c-3.259 0-3.667.014-4.947.072-1.52.069-2.888.373-3.989 1.473C1.963 2.485 1.659 3.853 1.59 5.373 1.532 6.653 1.518 7.061 1.518 12s.014 5.347.072 6.627c.069 1.52.373 2.888 1.474 3.988 1.1 1.1 2.468 1.404 3.988 1.474 1.28.058 1.688.072 4.948.072s3.668-.014 4.948-.072c1.52-.07 2.888-.374 3.988-1.474 1.1-1.1 1.404-2.468 1.474-3.988.058-1.28.072-1.688.072-6.627s-.014-5.347-.072-6.627c-.07-1.52-.374-2.888-1.474-3.988C19.836.373 18.468.069 16.948 0 15.668-.058 15.26-.072 12-.072zm0 5.838A6.162 6.162 0 0 0 5.838 12 6.162 6.162 0 0 0 12 18.162 6.162 6.162 0 0 0 18.162 12 6.162 6.162 0 0 0 12 5.838zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-          Instagram
-        </a>
-        <a href="https://youtube.com/@venlong" target="_blank" class="contact-btn" id="btn-yt">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
-          YouTube
-        </a>
-        <a href="https://discord.gg/venlong" target="_blank" class="contact-btn" id="btn-dc">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-          Discord
-        </a>
-        <a href="mailto:hello@venlong.com" class="contact-btn" id="btn-mail">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
-          Email
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="footer-inner">
-      <span class="footer-zh">文龙工作室</span>
-      <span>© 2024 Venlong. All rights reserved.</span>
-      <span class="footer-tagline">传奇数字体验</span>
-    </div>
-  </footer>
-
-  <!-- ==================== DETAIL MODAL ==================== -->
-  <div id="detail-modal" class="detail-modal">
-    <div class="detail-modal-bg"></div>
-    <div class="detail-modal-wrapper">
-      <button class="detail-close" aria-label="Close detail">✕</button>
-      <div class="detail-modal-content">
-        <div class="detail-hero">
-          <div class="detail-zh-tag" id="detail-zh">项目详情</div>
-          <h2 class="detail-title" id="detail-title">Project Name</h2>
-          <div class="detail-tags" id="detail-tags"></div>
-        </div>
-        
-        <div class="detail-body">
-          <p class="detail-desc" id="detail-desc">Loading detailed description outlining the legendary craftsmanship backing this digital experience.</p>
-          <div class="detail-gallery">
-            <div class="dg-placeholder">
-              <div class="dg-overlay"></div>
-              <span>Legendary Visuals</span>
-            </div>
-            <div class="dg-placeholder">
-              <div class="dg-overlay"></div>
-              <span>Premium Showcases</span>
+        <div class="sp-right">
+          <div class="sp-visual" id="sp-visual">
+            <div class="sp-visual-inner">
+              <div class="sp-icon" id="sp-icon"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script type="module" src="./main.js"></script>
-</body>
+    <!-- ==================== PROJECT PANEL ==================== -->
+    <div id="project-panel" class="pp-overlay" aria-modal="true" role="dialog">
+      <div class="pp-close-btn" id="pp-close" aria-label="Close project panel">✕</div>
+      <div class="pp-progress"><div class="pp-progress-bar" id="pp-progress-bar"></div></div>
+      <div class="pp-sidebar">
+        <div class="pp-sidebar-num" id="pp-sidebar-num">01</div>
+        <div class="pp-sidebar-zh" id="pp-sidebar-zh">项目</div>
+        <div class="pp-sidebar-tags" id="pp-sidebar-tags"></div>
+        <button class="pp-sidebar-close" id="pp-sidebar-close">← Back</button>
+      </div>
+      <div class="pp-main">
+        <div class="pp-header">
+          <h2 class="pp-title" id="pp-title">Project Name</h2>
+          <p class="pp-desc" id="pp-desc">Project description.</p>
+        </div>
+        <div class="pp-gallery" id="pp-gallery"></div>
+        <div class="pp-detail-info">
+          <div class="pp-detail-col" id="pp-detail-col-1"></div>
+          <div class="pp-detail-col" id="pp-detail-col-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
 </html>

@@ -1,0 +1,347 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;700;900&family=Noto+Serif+SC:wght@400;700;900&display=swap');
+
+:root {
+  --bg: #050505;
+  --red: #cc0018;
+  --red-glow: rgba(204, 0, 24, 0.4);
+  --gold: #c8a44a;
+  --gold-glow: rgba(200, 164, 74, 0.2);
+  --white: #ffffff;
+  --muted: #555555;
+  --glass: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  
+  --font-main: 'Outfit', sans-serif;
+  --font-zh: 'Noto Serif SC', serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-main);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Layout Components --- */
+
+.main-container {
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.main-container.mounted {
+  opacity: 1;
+}
+
+/* Header */
+.imperial-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 3rem 5rem;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.nav-list {
+  display: flex;
+  gap: 3rem;
+  list-style: none;
+  pointer-events: auto;
+}
+
+.nav-link {
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.8rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: all 0.7s ease;
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.nav-link:hover {
+  color: var(--red);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--red);
+  transition: width 0.7s ease;
+  box-shadow: 0 0 15px var(--red);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.sync-btn {
+  background: var(--red);
+  color: white;
+  padding: 1.2rem 3rem;
+  font-weight: 900;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  box-shadow: 0 0 40px var(--red-glow);
+}
+
+.sync-btn:hover {
+  background: white;
+  color: black;
+  box-shadow: 0 0 60px rgba(255,255,255,0.2);
+}
+
+/* Hero Section */
+.hero-section {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(135deg, #000 0%, #050505 50%, #1a0003 100%);
+}
+
+/* Dragon Watermark */
+.hero-dragon-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vh;
+  height: 80vh;
+  opacity: 0.05;
+  z-index: 1;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: grayscale(1) brightness(2);
+}
+
+.hero-dragon-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: float-dragon 20s ease-in-out infinite;
+}
+
+@keyframes float-dragon {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.05) rotate(5deg); }
+}
+
+.massive-typography {
+  position: relative;
+  z-index: 20;
+  pointer-events: none;
+  font-size: clamp(10rem, 42vw, 60rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.18em;
+  font-style: italic;
+  color: white;
+  filter: drop-shadow(0 0 150px rgba(255,255,255,0.15));
+}
+
+.main-reveal-content {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  opacity: 0;
+  transform: translateY(100px) scale(1.1);
+  background: #050505;
+  display: flex;
+  align-items: center;
+  padding: 0 12rem;
+  overflow: hidden;
+}
+
+/* Cloud Texture Overlay */
+.cloud-texture {
+  position: absolute;
+  inset: 0;
+  background: url('/assets/clouds.png');
+  background-size: 50%;
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.reveal-image-wrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 65%;
+  height: 100%;
+  opacity: 0.5;
+}
+
+.reveal-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.2) brightness(0.8);
+}
+
+.reveal-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to left, transparent, #050505 85%);
+}
+
+.reveal-text-content {
+  position: relative;
+  z-index: 10;
+  max-width: 70rem;
+}
+
+.protocol-tag {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.tag-line {
+  width: 6rem;
+  height: 2px;
+  background: var(--red);
+  box-shadow: 0 0 20px var(--red);
+}
+
+.tag-text {
+  color: var(--red);
+  font-weight: 900;
+  font-size: 0.9rem;
+  letter-spacing: 1.5rem;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px var(--red-glow);
+}
+
+.reveal-title {
+  font-size: clamp(5rem, 12vw, 15rem);
+  font-weight: 900;
+  line-height: 0.75;
+  letter-spacing: -0.06em;
+  font-style: italic;
+  margin-bottom: 4rem;
+  text-transform: uppercase;
+  text-shadow: 0 0 50px rgba(0,0,0,1);
+}
+
+/* Utils */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.4) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 9997;
+}
+
+.hud-grid {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(204, 0, 24, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(204, 0, 24, 0.08) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glowing Hanzi HUD */
+.hanzi-hud {
+  position: fixed;
+  right: 4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.hanzi-item {
+  font-family: var(--font-zh);
+  font-size: 2rem;
+  color: var(--red);
+  opacity: 0.2;
+  text-shadow: 0 0 10px var(--red);
+  writing-mode: vertical-rl;
+  letter-spacing: 1rem;
+}
+
+.text-stroke {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.25);
+  color: transparent;
+}
+
+/* Spinner Section Enhancement */
+.services-section {
+  padding: 30rem 10rem;
+  background: #020202;
+  border-top: 1px solid rgba(204,0,24,0.1);
+}
+
+.service-card {
+  position: absolute;
+  inset: 0;
+  background: rgba(204,0,24,0.02);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  backface-visibility: hidden;
+  transition: all 0.8s ease;
+}
+
+.service-card:hover {
+  border-color: var(--red);
+  background: rgba(204, 0, 24, 0.1);
+  box-shadow: 0 0 100px rgba(204,0,24,0.2);
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(to right, var(--red), transparent);
+}
