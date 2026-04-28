@@ -50,26 +50,41 @@ export default function LoadingScreen({ onComplete }) {
 
   return (
     <div ref={containerRef} className="fixed inset-0 z-[9999] bg-[#050505] flex flex-col items-center justify-center overflow-hidden">
-      {/* Decorative Corners */}
-      <div ref={el => decorRef.current[0] = el} className="absolute top-10 left-10 w-16 h-16 border-t border-l border-gold/30" />
-      <div ref={el => decorRef.current[1] = el} className="absolute top-10 right-10 w-16 h-16 border-t border-r border-gold/30" />
-      <div ref={el => decorRef.current[2] = el} className="absolute bottom-10 left-10 w-16 h-16 border-b border-l border-gold/30" />
-      <div ref={el => decorRef.current[3] = el} className="absolute bottom-10 right-10 w-16 h-16 border-b border-r border-gold/30" />
+      {/* Decorative Corners - Technical Lattice */}
+      <div ref={el => decorRef.current[0] = el} className="absolute top-12 left-12 w-24 h-24 border-t-2 border-l-2 border-gold/40">
+         <div className="absolute top-0 left-0 w-2 h-2 bg-red shadow-[0_0_15px_var(--red)]" />
+      </div>
+      <div ref={el => decorRef.current[1] = el} className="absolute top-12 right-12 w-24 h-24 border-t-2 border-r-2 border-gold/40">
+         <div className="absolute top-0 right-0 w-2 h-2 bg-red shadow-[0_0_15px_var(--red)]" />
+      </div>
+      <div ref={el => decorRef.current[2] = el} className="absolute bottom-12 left-12 w-24 h-24 border-b-2 border-l-2 border-gold/40">
+         <div className="absolute bottom-0 left-0 w-2 h-2 bg-red shadow-[0_0_15px_var(--red)]" />
+      </div>
+      <div ref={el => decorRef.current[3] = el} className="absolute bottom-12 right-12 w-24 h-24 border-b-2 border-r-2 border-gold/40">
+         <div className="absolute bottom-0 right-0 w-2 h-2 bg-red shadow-[0_0_15px_var(--red)]" />
+      </div>
 
       <div className="relative z-10 text-center">
-        <h1 ref={textRef} className="text-7xl md:text-[8vw] font-black tracking-[-0.05em] text-white uppercase italic leading-none">
+        <div className="mb-8 overflow-hidden">
+           <p className="text-[0.6rem] tracking-[1rem] text-red font-mono animate-pulse">SYSTEM_BOOT: IMPERIAL_DRAGON_PROTOCOL_INIT</p>
+        </div>
+        <h1 ref={textRef} className="text-7xl md:text-[9vw] font-black tracking-[-0.07em] text-white uppercase italic leading-none">
           VENLONG
-          <span className="block text-[10px] tracking-[1em] text-gold font-normal italic mt-4">ESTABLISHED 2024</span>
+          <span className="block text-[12px] tracking-[1.5em] text-gold font-normal italic mt-8 opacity-60">NEURAL_SHRINE_ARCHITECT</span>
         </h1>
       </div>
       
-      <div className="absolute bottom-32 w-48 h-[2px] bg-white/5 overflow-hidden">
-        <div ref={progressRef} className="absolute inset-0 bg-gold w-0" />
+      <div className="absolute bottom-32 flex flex-col items-center gap-4">
+        <div className="w-64 h-[2px] bg-white/5 overflow-hidden relative">
+          <div ref={progressRef} className="absolute inset-0 bg-red w-0 shadow-[0_0_20px_var(--red)]" />
+        </div>
+        <div className="flex gap-4">
+           {['SHRINE', 'DRAGON', 'NEXUS'].map(tag => (
+             <span key={tag} className="text-[0.5rem] tracking-[0.3rem] text-white/20 font-black">{tag}</span>
+           ))}
+        </div>
       </div>
 
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
-        <div className="w-full h-full bg-[url('https://www.transparenttextures.com/patterns/noise-lines.png')]" />
-      </div>
     </div>
   );
 }
