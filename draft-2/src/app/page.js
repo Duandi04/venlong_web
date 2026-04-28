@@ -11,23 +11,61 @@ import SplitType from 'split-type';
 import ThemeToggle from '@/components/ThemeToggle';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, MeshDistortMaterial, MeshWobbleMaterial, Sphere, Box, Torus, Octahedron, Icosahedron } from '@react-three/drei';
+import { useMemo } from 'react';
 
 
 gsap.registerPlugin(ScrollTrigger);
 
 // --- Components ---
 
+const GoldenDust = () => {
+  const count = 1500;
+  const positions = useMemo(() => {
+    const p = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+       p[i*3] = (Math.random() - 0.5) * 25;
+       p[i*3+1] = (Math.random() - 0.5) * 25;
+       p[i*3+2] = (Math.random() - 0.5) * 25;
+    }
+    return p;
+  }, [count]);
+
+  const points = useRef();
+  useFrame((state) => {
+    if (points.current) {
+      points.current.rotation.y = state.clock.getElapsedTime() * 0.05;
+      points.current.rotation.x = state.clock.getElapsedTime() * 0.02;
+    }
+  });
+
+  return (
+    <points ref={points}>
+      <bufferGeometry>
+        <bufferAttribute 
+          attach="attributes-position" 
+          count={positions.length / 3} 
+          array={positions} 
+          itemSize={3} 
+        />
+      </bufferGeometry>
+      <pointsMaterial color="#f1d279" size={0.05} transparent opacity={0.4} sizeAttenuation />
+    </points>
+  );
+};
+
 const ServiceVisual = ({ activeIndex, color }) => {
   const shapes = [
-    <Sphere args={[1, 64, 64]}><MeshDistortMaterial color={color} speed={3} distort={0.4} roughness={0.1} metalness={0.8} /></Sphere>,
-    <Box args={[1.5, 1.5, 1.5]}><MeshWobbleMaterial color={color} factor={1} speed={2} roughness={0.1} metalness={0.8} /></Box>,
-    <Torus args={[1, 0.4, 16, 100]}><MeshDistortMaterial color={color} speed={2} distort={0.3} roughness={0.1} metalness={0.8} /></Torus>,
-    <Octahedron args={[1.5]}><MeshWobbleMaterial color={color} factor={0.5} speed={3} roughness={0.1} metalness={0.8} /></Octahedron>,
-    <Icosahedron args={[1.5, 0]}><MeshDistortMaterial color={color} speed={4} distort={0.25} roughness={0.1} metalness={0.8} /></Icosahedron>
+    <Sphere args={[1.2, 64, 64]}><MeshDistortMaterial color="#c8a44a" emissive={color} emissiveIntensity={0.8} speed={4} distort={0.5} roughness={0} metalness={1} /></Sphere>,
+    <Box args={[1.6, 1.6, 1.6]}><MeshWobbleMaterial color="#c8a44a" emissive={color} emissiveIntensity={0.8} factor={1.2} speed={3} roughness={0} metalness={1} /></Box>,
+    <Torus args={[1.2, 0.5, 16, 100]}><MeshDistortMaterial color="#c8a44a" emissive={color} emissiveIntensity={0.8} speed={3} distort={0.4} roughness={0} metalness={1} /></Torus>,
+    <Octahedron args={[1.8]}><MeshWobbleMaterial color="#c8a44a" emissive={color} emissiveIntensity={0.8} factor={0.8} speed={4} roughness={0} metalness={1} /></Octahedron>,
+    <Icosahedron args={[1.8, 0]}><MeshDistortMaterial color="#c8a44a" emissive={color} emissiveIntensity={0.8} speed={5} distort={0.3} roughness={0} metalness={1} /></Icosahedron>
   ];
 
   return (
-    <Float speed={3} rotationIntensity={2} floatIntensity={1.5}>
+    <Float speed={5} rotationIntensity={3} floatIntensity={2.5}>
+      <spotLight position={[5, 10, 5]} intensity={2} color="#f1d279" angle={0.3} />
+      <pointLight position={[-10, -5, -5]} intensity={1.5} color={color} />
       {shapes[activeIndex] || shapes[0]}
     </Float>
   );
@@ -71,6 +109,10 @@ export default function Home() {
   }, []);
 
   const [activeService, setActiveService] = useState(0);
+  const [manualRotation, setManualRotation] = useState(0);
+  const isDragging = useRef(false);
+  const startAngle = useRef(0);
+  const currentRotation = useRef(0);
   const servicesRef = useRef(null);
   const wheelRef = useRef(null);
 
@@ -139,7 +181,7 @@ export default function Home() {
         y: 200, 
         stagger: 0.12, 
         duration: 3,
-        filter: 'blur(60px)',
+        filter: 'blur(10px)',
         scale: 5,
         ease: "power4.out"
       }, 0);
@@ -177,12 +219,16 @@ export default function Home() {
       // Services Scroll Logic
       const servicesTl = gsap.timeline({
         scrollTrigger: {
+          id: "services-trigger",
           trigger: servicesRef.current,
           start: "top top",
           end: "+=300%",
           scrub: 1,
           pin: true,
           onUpdate: (self) => {
+            // Only update via scroll if the user isn't manually switching
+            if (Date.now() - lastManualSwitch.current < 1000) return;
+            
             const index = Math.min(
               services.length - 1,
               Math.floor(self.progress * services.length)
@@ -204,6 +250,25 @@ export default function Home() {
       split.revert();
     };
   }, [phase, mounted]);
+
+  const lastManualSwitch = useRef(0);
+  const handleServiceSwitch = (index) => {
+    if (!servicesRef.current || !wheelRef.current) return;
+    lastManualSwitch.current = Date.now();
+    
+    const anglePerService = 360 / services.length;
+    const targetRotation = -index * anglePerService;
+    currentRotation.current = targetRotation;
+    
+    // Animate the wheel and visuals smoothly without moving the window scroll
+    gsap.to(wheelRef.current, { 
+      rotation: targetRotation, 
+      duration: 1.2, 
+      ease: "expo.out" 
+    });
+    
+    setActiveService(index);
+  };
 
   if (!mounted) return null;
 
@@ -234,9 +299,16 @@ export default function Home() {
           
           <nav className="header-nav">
              <ul className="nav-list">
-                {['Services', 'Archives', 'Tech', 'Sync'].map((item) => (
+                {['About', 'Services', 'Archives', 'Tech', 'Sync'].map((item) => (
                   <li key={item}>
-                    <Link href={item === 'Services' ? '#services' : `#${item.toLowerCase()}`} className="nav-link">
+                    <Link 
+                      href={
+                        item === 'Services' ? '#services' : 
+                        item === 'Sync' ? '#contact' : 
+                        `#${item.toLowerCase()}`
+                      } 
+                      className="nav-link"
+                    >
                       {item}
                     </Link>
                   </li>
@@ -249,7 +321,7 @@ export default function Home() {
              <div style={{ width: '3.5rem', height: '3.5rem', borderRadius: '50%', border: '1px solid var(--glass-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--glass)' }}>
                 <Volume2 size={20} className="text-muted" style={{ margin: 'auto' }} />
              </div>
-             <button className="sync-btn">
+             <button type="button" className="sync-btn">
                Sync Protocol
              </button>
           </div>
@@ -257,7 +329,7 @@ export default function Home() {
         </header>
 
         {/* HERO SECTION */}
-        <section ref={heroPinRef} className="hero-section">
+        <section id="hero" ref={heroPinRef} className="hero-section">
           
           <div className="hero-background">
              <div className="glow-circle glow-1" />
@@ -295,10 +367,10 @@ export default function Home() {
                   DRAGON<br />DYNAMICS.
                 </h2>
                 <div className="reveal-actions">
-                   <button className="btn-primary">
+                   <button type="button" className="btn-primary">
                      Enter The Grid
                    </button>
-                   <button className="btn-secondary">
+                   <button type="button" className="btn-secondary">
                      Archive Access
                    </button>
                 </div>
@@ -339,7 +411,7 @@ export default function Home() {
                       </div>
                     ))}
                  </div>
-                 <button className="btn-secondary" style={{ padding: '1.5rem 6rem', border: '1px solid var(--red)', color: 'var(--red)', opacity: 0.6 }}>
+                 <button type="button" className="btn-secondary" style={{ padding: '1.5rem 6rem', border: '1px solid var(--red)', color: 'var(--red)', opacity: 0.6 }}>
                     Access Codex
                  </button>
               </motion.div>
@@ -368,10 +440,37 @@ export default function Home() {
         {/* SERVICES SECTION */}
         <section id="services" ref={servicesRef} className="services-section-v2">
            <div className="services-content-grid">
+              <div className="services-left-actions">
+                 <div className="action-header">
+                    <span className="text-[10px] tracking-[5px] text-red font-black">VENLONG_REGISTRY</span>
+                    <div className="w-12 h-[1px] bg-red" />
+                 </div>
+                 <div className="icon-list">
+                    {services.map((s, i) => (
+                      <button type="button" 
+                        key={s.id} 
+                        type="button"
+                        id={`nav-icon-${s.id}`}
+                        className={`icon-item ${activeService === i ? 'active' : ''}`}
+                        onClick={() => handleServiceSwitch(i)}
+                      >
+                         {s.icon}
+                         <div className="hover-line" style={{ background: s.color }} />
+                      </button>
+                    ))}
+                 </div>
+                 <button type="button" className="initiate-btn-v2 mt-8">
+                    <span>INITIATE</span>
+                    <ArrowUpRight size={18} />
+                 </button>
+              </div>
+
               <div className="services-info-panel">
                 <AnimatePresence mode="wait">
-                    <motion.div
+                    <motion.article
                       key={activeService}
+                      id={`service-${services[activeService].id}`}
+                      className="service-detail-item"
                       initial={{ opacity: 0, x: -50 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 50 }}
@@ -380,7 +479,7 @@ export default function Home() {
                     <span style={{ color: services[activeService].color, fontWeight: 900, letterSpacing: '1.5rem', textTransform: 'uppercase', fontSize: '0.8rem', display: 'block', marginBottom: '2rem' }}>
                       {services[activeService].zh}
                     </span>
-                    <h2 style={{ fontSize: '7rem', fontWeight: 900, lineHeight: 0.8, marginBottom: '4rem', letterSpacing: '-0.05em', textTransform: 'uppercase', color: 'var(--text)' }}>
+                    <h2 style={{ fontSize: '6rem', fontWeight: 900, lineHeight: 0.9, marginBottom: '3rem', letterSpacing: '-0.05em', textTransform: 'uppercase', color: 'var(--text)', whiteSpace: 'pre-line' }}>
                       {services[activeService].title.replace(' & ', ' &\n')}
                     </h2>
                     <p style={{ fontSize: '2.5rem', color: 'var(--muted)', fontWeight: 300, lineHeight: 1.5, marginBottom: '6rem', maxWidth: '50rem' }}>
@@ -388,59 +487,86 @@ export default function Home() {
                     </p>
                     
                     <div style={{ display: 'flex', alignItems: 'center', gap: '3rem', marginBottom: '4rem' }}>
-                       <button className="btn-secondary" style={{ borderColor: services[activeService].color, color: services[activeService].color }}>
+                       <button type="button" className="btn-secondary" style={{ borderColor: services[activeService].color, color: services[activeService].color }}>
                          Initiate Project
                        </button>
                        <div className="manual-nav">
-                          <button 
-                            onClick={() => {
-                              const prevIndex = (activeService - 1 + services.length) % services.length;
-                              const sectionTop = servicesRef.current.offsetTop;
-                              const sectionHeight = window.innerHeight * 3;
-                              window.scrollTo({
-                                top: sectionTop + (prevIndex / services.length) * sectionHeight + 50,
-                                behavior: 'smooth'
-                              });
-                            }}
+                          <button type="button" 
+                            onClick={() => handleServiceSwitch((activeService - 1 + services.length) % services.length)}
                             className="nav-btn-circle"
+                            style={{ color: 'var(--gold)' }}
                           >
                              <ChevronLeft size={20} />
                           </button>
-                          <button 
-                            onClick={() => {
-                              const nextIndex = (activeService + 1) % services.length;
-                              const sectionTop = servicesRef.current.offsetTop;
-                              const sectionHeight = window.innerHeight * 3;
-                              window.scrollTo({
-                                top: sectionTop + (nextIndex / services.length) * sectionHeight + 50,
-                                behavior: 'smooth'
-                              });
-                            }}
+                          <button type="button" 
+                            onClick={() => handleServiceSwitch((activeService + 1) % services.length)}
                             className="nav-btn-circle"
+                            style={{ color: 'var(--gold)' }}
                           >
                              <ChevronRight size={20} />
                           </button>
-                          <button className="nav-btn-circle gear-rotate">
+                          <button type="button" className={`nav-btn-circle ${isDragging.current ? 'active-gear' : ''} gear-rotate`}>
                              <Settings size={20} />
                           </button>
                        </div>
                     </div>
-                  </motion.div>
+                  </motion.article>
                 </AnimatePresence>
               </div>
 
               <div className="services-wheel-panel">
-                 <div className="wheel-container">
+                 <div 
+                   className="wheel-container"
+                   onPointerDown={(e) => {
+                      isDragging.current = true;
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      const centerX = rect.left + rect.width / 2;
+                      const centerY = rect.top + rect.height / 2;
+                      startAngle.current = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI) - currentRotation.current;
+                      e.currentTarget.setPointerCapture(e.pointerId);
+                   }}
+                   onPointerMove={(e) => {
+                      if (!isDragging.current) return;
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      const centerX = rect.left + rect.width / 2;
+                      const centerY = rect.top + rect.height / 2;
+                      const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
+                      const newRotation = angle - startAngle.current;
+                      currentRotation.current = newRotation;
+                      gsap.to(wheelRef.current, { rotation: newRotation, duration: 0.1 });
+                      
+                      // Calculate active service based on rotation
+                      const normalizedRotation = ((newRotation % 360) + 360) % 360;
+                      const index = Math.round((360 - normalizedRotation) / (360 / services.length)) % services.length;
+                      setActiveService(index);
+                   }}
+                   onPointerUp={(e) => {
+                      isDragging.current = false;
+                      e.currentTarget.releasePointerCapture(e.pointerId);
+                      
+                      // Snap to nearest service
+                      const anglePerService = 360 / services.length;
+                      const snappedRotation = Math.round(currentRotation.current / anglePerService) * anglePerService;
+                      currentRotation.current = snappedRotation;
+                      gsap.to(wheelRef.current, { rotation: snappedRotation, duration: 0.5, ease: "back.out(1.7)" });
+                   }}
+                 >
                     <div className="canvas-nexus">
-                       <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+                       <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 2]}>
                           <ambientLight intensity={0.5} />
-                          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-                          <pointLight position={[-10, -10, -10]} />
+                          <GoldenDust />
                           <ServiceVisual activeIndex={activeService} color={services[activeService].color} />
                        </Canvas>
+                       <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-20 pointer-events-none">
+                          <span className="text-[10px] tracking-[8px] font-black uppercase text-white">DRAG TO SPIN WHEEL</span>
+                       </div>
                     </div>
 
-                    <div ref={wheelRef} className="wheel-inner">
+                    <div 
+                      ref={wheelRef} 
+                      className="wheel-inner"
+                      style={{ cursor: 'grab' }}
+                    >
                        {services.map((s, i) => {
                          const angle = (i * (360 / services.length));
                          const isActive = activeService === i;
@@ -452,7 +578,7 @@ export default function Home() {
                                transform: `rotate(${angle}deg) translate(35rem) rotate(-${angle}deg)`,
                                '--accent-color': s.color
                              }}
-                             onClick={() => setActiveService(i)}
+                             onClick={() => handleServiceSwitch(i)}
                            >
                              <div className="item-icon">{s.icon}</div>
                              <span className="item-number">0{i+1}</span>
@@ -470,6 +596,9 @@ export default function Home() {
            </div>
         </section>
 
+        <section id="archives" style={{ height: '0' }} />
+        <section id="tech" style={{ height: '0' }} />
+        
         <footer id="contact" style={{ padding: '40rem 10rem', background: 'var(--bg)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
            <div className="cloud-texture" style={{ opacity: 0.05 }} />
            
