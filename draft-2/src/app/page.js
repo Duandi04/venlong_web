@@ -447,7 +447,7 @@ export default function Home() {
                  </div>
                  <div className="icon-list">
                     {services.map((s, i) => (
-                      <button type="button" 
+                      <button 
                         key={s.id} 
                         type="button"
                         id={`nav-icon-${s.id}`}

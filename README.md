@@ -1,32 +1,35 @@
 # Venlong Web Experience
 
-A premium, ultra-modern landing page built with **React**, **Vite**, **Framer Motion**, and **Lenis**.
+This repository contains two different templates for the Venlong web experience, grouped into separate folders.
 
-## Aesthetic
-This project blends two highly distinct visual styles:
-- **GTA 6 / Vice City Vibe**: Bold typography, cinematic parallax scroll effects, neon styling.
-- **Imlek (Lunar New Year) Palette**: Deep crimson reds, glowing golds, and crisp whites.
+## Project Structure
 
-Features a fully supported **Light** and **Dark** mode.
+- **`/main`**: The main website template built with Vite, vanilla JavaScript, and GSAP. 
+- **`/draft-2`**: An alternative draft template built with Next.js, React, and Tailwind CSS.
 
-## Features
-- **Framer Motion**: Used for complex scroll animations (like the massive `VENLONG` text reveal) and magnetic spring-based button hover effects.
-- **Lenis Smooth Scroll**: Hijacks native scrolling for a buttery-smooth, high-end luxurious feel.
-- **Theme Toggling**: Switch between Imlek Dark and Imlek Light seamlessly.
+---
 
-## Getting Started
+## 1. Main Website (`/main`)
 
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+A premium vanilla JS landing page with smooth GSAP animations and Chinese-inspired aesthetics.
 
-2. **Run the development server:**
-   ```bash
-   npm run dev
-   ```
+### Getting Started
+```bash
+cd main
+npm install
+npm run dev
+```
 
-3. **Expose with Ngrok** (optional, for sharing):
-   ```bash
-   npx ngrok http 5173
-   ```
+---
+
+## 2. Draft 2 (`/draft-2`)
+
+A modern Next.js implementation with advanced 3D elements and React components.
+
+### Getting Started
+```bash
+cd draft-2
+npm install
+npm run dev
+```
+
