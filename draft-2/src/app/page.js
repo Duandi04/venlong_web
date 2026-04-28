@@ -189,8 +189,8 @@ export default function Home() {
       // 'N' Highlight
       const nChar = split.chars[2];
       tl.to(nChar, {
-        color: '#cc0018',
-        textShadow: '0 0 60px #cc0018, 0 0 120px #cc0018',
+        color: 'var(--red)',
+        textShadow: '0 0 60px var(--red), 0 0 120px var(--red)',
         scale: 1.5,
         duration: 1.5
       }, 2);
@@ -374,7 +374,7 @@ export default function Home() {
                      Archive Access
                    </button>
                 </div>
-                <p style={{ color: '#555', fontSize: '0.65rem', letterSpacing: '0.6rem', textTransform: 'uppercase', maxWidth: '35rem', lineHeight: '2', fontWeight: 900 }}>
+                <p style={{ color: 'var(--muted)', fontSize: '0.65rem', letterSpacing: '0.6rem', textTransform: 'uppercase', maxWidth: '35rem', lineHeight: '2', fontWeight: 900 }}>
                   HARNESSING THE POWER OF THE IMPERIAL DRAGON TO ARCHITECT THE FUTURE OF NEURAL EXPERIENCES.
                 </p>
              </div>
